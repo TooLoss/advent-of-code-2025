@@ -10,7 +10,7 @@ bool is_invalid(std::string_view number, int time = 2) {
 
     bool repeated = true;
     for (size_t i = 0 ; i < center ; i++) {
-        for (size_t j = 0 ; j < time ; j++) {
+        for (size_t j = 1 ; j < time ; j++) {
             repeated = repeated * number[i + j * center] == number[i];
         }
     }
@@ -19,16 +19,16 @@ bool is_invalid(std::string_view number, int time = 2) {
 }
 
 bool multiple_invalid(std::string_view number) {
-    bool repeated = true;
-    for (size_t i = 0 ; i < number.length() ; i++) {
-        
+    for (size_t i = 2 ; i <= number.length() ; i++) {
+        if (is_invalid(number, i)) return true;
     }
+    return false;
 }
 
 unsigned long long int add_invalid_in_range(const unsigned long long int &begin, const unsigned long long int &end) {
     unsigned long long int sum = 0;
     for (size_t i = begin ; i <= end ; i++) {
-        if (is_invalid(std::to_string(i))) {
+        if (multiple_invalid(std::to_string(i))) {
             sum += i;
         }
     }
